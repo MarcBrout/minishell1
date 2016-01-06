@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 11:10:26 2016 marc brout
-** Last update Wed Jan  6 14:26:27 2016 marc brout
+** Last update Wed Jan  6 14:27:06 2016 marc brout
 */
 
 #ifndef MYSH_H_
@@ -26,7 +26,6 @@
 
 typedef struct		s_arg
 {
-  int			nbw;
   pid_t			pid;
   pid_t			cpid;
   char			**wtab;

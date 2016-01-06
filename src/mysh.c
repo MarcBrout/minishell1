@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 14:02:14 2016 marc brout
-** Last update Wed Jan  6 14:26:00 2016 marc brout
+** Last update Wed Jan  6 14:27:41 2016 marc brout
 */
 
 #include "mysh.h"
@@ -55,12 +55,14 @@ char		add_word_to_tab(char **wtab, char *arg, int nbw)
 
 char		str_to_wortab(char *arg, t_arg *targ)
 {
-  if ((targ->nbw = count_words(arg)))
+  int		nbw;
+
+  if ((nbw = count_words(arg)))
     {
-      if ((targ->wtab = malloc(sizeof(char *) * (targ->nbw + 1))) == NULL)
+      if ((targ->wtab = malloc(sizeof(char *) * (nbw + 1))) == NULL)
 	return (1);
-      targ->wtab[targ->nbw] = NULL;
-      if (add_word_to_tab(targ->wtab, arg, targ->nbw))
+      targ->wtab[nbw] = NULL;
+      if (add_word_to_tab(targ->wtab, arg, nbw))
 	return (1);
     }
   return (0);
