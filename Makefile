@@ -5,12 +5,13 @@
 ## Login   <brout_m@epitech.net>
 ## 
 ## Started on  Tue Dec  1 22:51:35 2015 marc brout
-## Last update Tue Jan  5 11:40:35 2016 marc brout
+## Last update Wed Jan  6 13:49:10 2016 marc brout
 ##
 
 SRCP	= ./src/
 
-SRC     = $(SRCP)mysh.c
+SRC     = $(SRCP)mysh.c \
+	$(SRCP)search_path.c \
 
 OBJS    = $(SRC:.c=.o)
 

@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 14:02:14 2016 marc brout
-** Last update Tue Jan  5 18:40:15 2016 marc brout
+** Last update Wed Jan  6 14:26:00 2016 marc brout
 */
 
 #include "mysh.h"
@@ -81,14 +81,17 @@ char		mysh(char **ev)
 	{
 	  if (str_to_wortab(str, &targ))
 	    return (1);
-	  targ.pid = getpid();
-	  targ.cpid = fork();
-	  if (!targ.cpid)
-	    execve(targ.wtab[0], &targ.wtab[1], ev);
-	  else
-	    wait(&status);
-	  free(str);
+	  if (!get_path(&targ, ev))
+	    {
+	      targ.pid = getpid();
+	      targ.cpid = fork();
+	      if (!targ.cpid)
+		execve(targ.wtab[0], &targ.wtab[1], ev);
+	      else
+		wait(&status);
+	    }
 	}
+      free(str);
       write(1, "$> ", 3);
     }
   return (0);
@@ -96,6 +99,8 @@ char		mysh(char **ev)
 
 int		main(int ac, char **av, char **ev)
 {
+  int		i;
+
   UNUSED(ac);
   UNUSED(av);
   if (ev == NULL)
@@ -103,6 +108,9 @@ int		main(int ac, char **av, char **ev)
       my_printf("Missing environnement variables\n");
       return (1);
     }
+  i = -1;
+  while (ev[++i] != NULL)
+    printf("%s\n", ev[i]);
   if (mysh(ev))
     return (1);
   return (0);

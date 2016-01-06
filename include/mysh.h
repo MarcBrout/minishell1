@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 11:10:26 2016 marc brout
-** Last update Tue Jan  5 19:34:05 2016 marc brout
+** Last update Wed Jan  6 14:26:27 2016 marc brout
 */
 
 #ifndef MYSH_H_
@@ -32,6 +32,7 @@ typedef struct		s_arg
   char			**wtab;
 }			t_arg;
 
+char get_path(t_arg *, char **); 
 char str_to_wordtab(char *, t_arg *);
 char add_word_to_tab(char **, char *, int);
 char mysh(char **);
