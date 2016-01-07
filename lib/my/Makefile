@@ -5,7 +5,7 @@
 ## Login   <brout_m@epitech.net>
 ## 
 ## Started on  Fri Oct  9 09:57:50 2015 marc brout
-## Last update Tue Jan  5 11:07:09 2016 marc brout
+## Last update Wed Jan  6 14:35:24 2016 marc brout
 ##
 
 SRC	= my_getnbr.c \
@@ -15,6 +15,7 @@ SRC	= my_getnbr.c \
 	my_putstr.c \
 	my_revstr.c \
 	my_strcmp.c \
+	my_strncmp.c \
 	my_strlen.c \
 	my_printf.c \
 	my_printfcsspb.c \
@@ -57,6 +58,5 @@ clean:
 fclean: clean
 	@$(RM) $(LIB)
 	@$(RM) $(LIBPATH)$(LIB)
-	@$(RM) $(HPATH)$(HEAD)
 
 re: fclean all clean

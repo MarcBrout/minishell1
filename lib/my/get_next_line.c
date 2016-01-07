@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Mon Jan  4 10:27:46 2016 marc brout
-** Last update Tue Jan  5 19:25:51 2016 marc brout
+** Last update Thu Jan  7 19:15:29 2016 marc brout
 */
 
 #include "get_next_line.h"
@@ -72,5 +72,6 @@ char		*get_next_line(const int fd)
       if (buff[i] == '\n' || !buff[i])
 	return (str);
     }
+  free(str);
   return (NULL);
 }
