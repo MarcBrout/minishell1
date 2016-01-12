@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 14:02:14 2016 marc brout
-** Last update Tue Jan 12 16:53:58 2016 marc brout
+** Last update Tue Jan 12 16:57:00 2016 marc brout
 */
 
 #include "mysh.h"
@@ -33,7 +33,6 @@ char		set_pwd(t_arg *targ)
 char		launch_mysh(t_arg *targ, char *str)
 {
   int		status;
-  t_builtins	test;
 
   if (!check_only_spaces(str))
     {
