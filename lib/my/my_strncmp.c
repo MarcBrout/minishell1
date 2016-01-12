@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Mon Oct  5 14:42:02 2015 marc brout
-** Last update Wed Jan  6 14:33:49 2016 marc brout
+** Last update Fri Jan  8 16:19:42 2016 marc brout
 */
 
 int	my_strncmp(char *need, char *tar, int n)

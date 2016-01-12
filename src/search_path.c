@@ -5,14 +5,13 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 18:50:28 2016 marc brout
-** Last update Wed Jan  6 17:53:44 2016 marc brout
+** Last update Mon Jan 11 19:18:33 2016 marc brout
 */
 
 #include "mysh.h"
 
-char		get_path(t_arg *targ, char **ev)
+char		get_path(t_arg *targ, UNUSED char **ev)
 {
-  UNUSED(ev);
   if (find_path(targ))
     {
       write(2, "command not found.\n", 20);
@@ -29,7 +28,7 @@ char		get_path(t_arg *targ, char **ev)
 char		**env_to_wordtab(char **ev, char *str, char c)
 {
   int		i;
-  
+
   i = 0;
   while (ev[i] != NULL && my_strncmp(ev[i], str, my_strlen(str) - 1))
     i += 1;
@@ -39,26 +38,14 @@ char		**env_to_wordtab(char **ev, char *str, char c)
 char		find_path(t_arg *targ)
 {
   char		*str;
-  int		i;
-  int		j;
   int		k;
 
   k = -1;
   str = targ->wtab[0];
   while (access(str, F_OK) && targ->ptab[++k] != NULL)
     {
-      if ((str = malloc(my_strlen(targ->wtab[0]) +
-			my_strlen(targ->ptab[k]) + 2)) == NULL)
+      if ((str = concat_str(targ->ptab[k], '/', targ->wtab[0])) == NULL)
 	return (1);
-      i = -1;
-      j = -1;
-      while (targ->ptab[k][++i])
-	str[++j] = targ->ptab[k][i];
-      str[++j] = '/';
-      i = -1;
-      while (targ->wtab[0][++i])
-	str[++j] = targ->wtab[0][i];
-      str[++j] = 0;
       free(targ->wtab[0]);
       targ->wtab[0] = str;
     }

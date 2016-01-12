@@ -5,16 +5,20 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 11:10:26 2016 marc brout
-** Last update Thu Jan  7 18:53:16 2016 marc brout
+** Last update Tue Jan 12 16:53:28 2016 marc brout
 */
 
 #ifndef MYSH_H_
 # define MYSH_H_
 
 # ifndef UNUSED
-#  define UNUSED(x) (void)x
+#  define UNUSED __attribute__((__unused__))
 # endif /* !UNUSED */
+# ifndef _POSIX_SOURCE
+#  define _POSIX_SOURCE
+# endif /* !_POSIXT_SOURCE */
 
+# include <fcntl.h>
 # include <signal.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -39,6 +43,7 @@ typedef struct		s_pfu
 {
   char			*str;
   func			pfu;
+  int			nb;
   struct s_pfu		*next;
 }			t_pfu;
 
@@ -48,7 +53,13 @@ typedef struct		s_big
   t_pfu			*pfunc;
 }			t_big;
 
-char add_elem(t_big *, char *, func);
+char cd_home(t_arg *);
+char check_only_spaces(char *);
+char set_pwd(t_arg *);
+char exec_command(t_big *, char *);
+char sub_env(t_arg *, char *);
+char add_env(t_arg *);
+char add_elem(t_big *, char *, func, int);
 char fill_pfunc(t_big *);
 char mysh_setenv(t_arg *, char *);
 char mysh_unsetenv(t_arg *, char *);
@@ -58,6 +69,8 @@ char print_env(t_arg *, char *);
 char launch_mysh(t_arg *, char *);
 char find_path(t_arg *);
 char get_path(t_arg *, char **);
+char *get_flagss(char **, char *);
+char *concat_str(char *, char, char *);
 char *copy_str(char *);
 char **copy_env(char **);
 char **str_to_wordtab(char *, char);
@@ -65,5 +78,7 @@ char **add_word_to_tab(char **, char *, int, char);
 char **env_to_wordtab(char **, char *, char);
 char mysh(t_big *);
 int count_words(char *, char);
+int find_env(char **, char *);
+void free_tab(char **);
 
 #endif /* !MYSH_H_ */
