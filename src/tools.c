@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Mon Jan 11 19:41:00 2016 marc brout
-** Last update Tue Jan 12 23:08:26 2016 marc brout
+** Last update Wed Jan 13 04:05:10 2016 marc brout
 */
 
 #include "mysh.h"
@@ -76,29 +76,4 @@ int		find_env(char **env, char *flag)
   if (env[i] == NULL)
     return (-1);
   return (i);
-}
-
-void		free_list(t_pfu *pfu)
-{
-  t_pfu		*tmp;
-  t_pfu		*tmp2;
-
-  tmp = pfu->next;
-  while (tmp != NULL)
-    {
-      tmp2 = tmp->next;
-      free(tmp);
-      tmp = tmp2;
-    }
-  free(pfu);
-}
-
-void		free_tab(char **tab)
-{
-  int		i;
-
-  i = -1;
-  while (tab[++i] != NULL)
-    free(tab[i]);
-  free(tab);
 }

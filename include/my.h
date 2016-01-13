@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Thu Oct  8 11:23:34 2015 marc brout
-** Last update Wed Jan  6 15:55:31 2016 marc brout
+** Last update Wed Jan 13 04:06:03 2016 marc brout
 */
 
 #ifndef MY_H_
@@ -49,4 +49,4 @@ int my_power_rec(int, int);
 int my_strcmp(char *, char *);
 int my_strncmp(char *, char *, int);
 
-#endif
+#endif /* !MY_H_ */

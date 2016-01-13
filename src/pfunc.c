@@ -5,10 +5,35 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Thu Jan  7 17:07:09 2016 marc brout
-** Last update Fri Jan  8 16:04:56 2016 marc brout
+** Last update Wed Jan 13 04:05:06 2016 marc brout
 */
 
 #include "mysh.h"
+
+void		free_list(t_pfu *pfu)
+{
+  t_pfu		*tmp;
+  t_pfu		*tmp2;
+
+  tmp = pfu->next;
+  while (tmp != NULL)
+    {
+      tmp2 = tmp->next;
+      free(tmp);
+      tmp = tmp2;
+    }
+  free(pfu);
+}
+
+void		free_tab(char **tab)
+{
+  int		i;
+
+  i = -1;
+  while (tab[++i] != NULL)
+    free(tab[i]);
+  free(tab);
+}
 
 char		add_elem(t_big *big, char *str, func pfu, int nb)
 {
