@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Mon Jan  4 10:37:28 2016 marc brout
-** Last update Fri Jan  8 10:33:21 2016 marc brout
+** Last update Wed Jan 13 15:41:39 2016 marc brout
 */
 
 #ifndef GET_NEXT_LINE_H_
@@ -13,12 +13,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 # ifndef READ_SIZE
-#  define READ_SIZE (2)
+#  define READ_SIZE (4096)
 # endif /* !READ_SIZE_H_ */
 
-int gnl_len(char *);
 char *my_realloc(char *, int);
-char *get_next_line(const int);
-char *get_last_buff(char *, char *, int *, int *);
+char *get_next_line(const int fd);
+char *get_last_buff(char *, int *, int *, int *);
 
 #endif /* !GET_NEXT_LINE_H_ */
