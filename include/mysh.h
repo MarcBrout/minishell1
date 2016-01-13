@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 11:10:26 2016 marc brout
-** Last update Tue Jan 12 16:53:28 2016 marc brout
+** Last update Wed Jan 13 02:47:23 2016 marc brout
 */
 
 #ifndef MYSH_H_
@@ -80,5 +80,6 @@ char mysh(t_big *);
 int count_words(char *, char);
 int find_env(char **, char *);
 void free_tab(char **);
+void free_list(t_pfu *);
 
 #endif /* !MYSH_H_ */

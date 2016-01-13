@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Mon Jan 11 19:43:15 2016 marc brout
-** Last update Mon Jan 11 19:51:00 2016 marc brout
+** Last update Wed Jan 13 04:01:26 2016 marc brout
 */
 
 #include "mysh.h"
@@ -81,7 +81,11 @@ char		mysh_unsetenv(t_arg *targ, UNUSED char *str)
 {
   int		i;
 
-  if (targ->wtab[1] != NULL)
+  if (targ->wtab[1] != NULL && (!my_strncmp(targ->wtab[1], "PWD", 3) ||
+				!my_strncmp(targ->wtab[1], "PATH", 4) ||
+				!my_strncmp(targ->wtab[1], "HOME", 4)))
+    write(2, "This variable must not be deleted.\n", 41);
+  else if (targ->wtab[1] != NULL)
     {
       i = -1;
       while (targ->env[++i] != NULL &&

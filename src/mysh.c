@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 14:02:14 2016 marc brout
-** Last update Tue Jan 12 16:57:00 2016 marc brout
+** Last update Wed Jan 13 03:29:00 2016 marc brout
 */
 
 #include "mysh.h"
@@ -13,20 +13,22 @@
 char		set_pwd(t_arg *targ)
 {
   int		i;
+  char		*str;
   int		nb;
 
   if ((i = find_env(targ->env, "PWD")) < 0)
     return (1);
   free(targ->env[i]);
-  if ((targ->env[i] = malloc(1)) == NULL)
+  if ((str = malloc(1)) == NULL)
     return (1);
-  targ->env[i][0] = 0;
+  str[0] = 0;
   nb = 1;
-  while (getcwd(targ->env[i], nb) == NULL && nb)
-    targ->env[i] = my_realloc(targ->env[i], ++nb);
-  if ((targ->env[i] = concat_str("PWD", '=', targ->env[i]))
+  while (getcwd(str, nb) == NULL && nb)
+    str = my_realloc(str, ++nb);
+  if ((targ->env[i] = concat_str("PWD", '=', str))
       == NULL)
     return (1);
+  free(str);
   return (0);
 }
 
@@ -41,7 +43,14 @@ char		launch_mysh(t_arg *targ, char *str)
 	  targ->pid = getpid();
 	  targ->cpid = fork();
 	  if (!targ->cpid)
-	    execve(targ->wtab[0], targ->wtab, targ->env);
+	    if (execve(targ->wtab[0], targ->wtab, targ->env) < 0)
+	      {
+		write(2, "Error while executing file.\n", 29);
+		free_tab(targ->env);
+		free_tab(targ->wtab);
+		free_tab(targ->ptab);
+		exit(1);
+	      }
 	  wait(&status);
 	}
     }
@@ -51,21 +60,24 @@ char		launch_mysh(t_arg *targ, char *str)
 char		exec_command(t_big *big, char *str)
 {
   t_pfu		*tmp;
+  int		nb;
 
   if ((big->targ->wtab = str_to_wordtab(str, ' ')) == NULL)
     return (1);
   tmp = big->pfunc;
   while (tmp->next != NULL && my_strcmp(tmp->str, big->targ->wtab[0]))
     tmp = tmp->next;
-  if (tmp->pfu(big->targ, str))
+  if ((nb = tmp->pfu(big->targ, str)) == 1)
     return (1);
   if (big->targ->env == NULL)
     {
+      free_list(big->pfunc);
       free(str);
-      return (2);
+      return (nb);
     }
   if (set_pwd(big->targ))
     return (1);
+  free_tab(big->targ->wtab);
   return (0);
 }
 
@@ -76,18 +88,14 @@ char		mysh(t_big *big)
 
   write(1, "$> ", 3);
   signal(SIGINT, SIG_IGN);
+  if ((big->targ->ptab =
+       env_to_wordtab(big->targ->env, "PATH=", ':')) == NULL)
+    return (1);
   while ((str = get_next_line(0)))
     {
-      if ((big->targ->ptab =
-	   env_to_wordtab(big->targ->env, "PATH=", ':')) == NULL)
-	return (1);
       if (my_strcmp(str, ""))
-	{
-	  if ((ret = exec_command(big, str)) == 1)
-	    return (1);
-	  else if (ret == 2)
-	    return (0);
-	}
+	if ((ret = exec_command(big, str)) >= 1 || big->targ->env == NULL)
+	  return (ret);
       free(str);
       write(1, "$> ", 3);
     }
@@ -108,7 +116,5 @@ int		main(UNUSED int ac, UNUSED char **av, char **ev)
   if ((big.targ->env = copy_env(ev)) == NULL ||
       (fill_pfunc(&big)))
     return (1);
-  if (mysh(&big))
-    return (1);
-  return (0);
+  return (mysh(&big));
 }
