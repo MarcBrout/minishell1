@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 14:02:14 2016 marc brout
-** Last update Wed Jan 13 03:29:00 2016 marc brout
+** Last update Thu Jan 21 09:44:33 2016 marc brout
 */
 
 #include "mysh.h"
@@ -62,22 +62,23 @@ char		exec_command(t_big *big, char *str)
   t_pfu		*tmp;
   int		nb;
 
-  if ((big->targ->wtab = str_to_wordtab(str, ' ')) == NULL)
-    return (1);
-  tmp = big->pfunc;
-  while (tmp->next != NULL && my_strcmp(tmp->str, big->targ->wtab[0]))
-    tmp = tmp->next;
-  if ((nb = tmp->pfu(big->targ, str)) == 1)
-    return (1);
-  if (big->targ->env == NULL)
+  if ((big->targ->wtab = str_to_wordtab(str, ' ')) != NULL)
     {
-      free_list(big->pfunc);
-      free(str);
-      return (nb);
+      tmp = big->pfunc;
+      while (tmp->next != NULL && my_strcmp(tmp->str, big->targ->wtab[0]))
+	tmp = tmp->next;
+      if ((nb = tmp->pfu(big->targ, str)) == 1)
+	return (1);
+      if (big->targ->env == NULL)
+	{
+	  free_list(big->pfunc);
+	  free(str);
+	  return (nb);
+	}
+      if (set_pwd(big->targ))
+	return (1);
+      free_tab(big->targ->wtab);
     }
-  if (set_pwd(big->targ))
-    return (1);
-  free_tab(big->targ->wtab);
   return (0);
 }
 
