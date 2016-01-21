@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 11:10:26 2016 marc brout
-** Last update Wed Jan 13 02:47:23 2016 marc brout
+** Last update Thu Jan 21 16:37:21 2016 marc brout
 */
 
 #ifndef MYSH_H_
@@ -32,6 +32,7 @@ typedef struct		s_arg
 {
   pid_t			pid;
   pid_t			cpid;
+  char			*pwd;
   char			**wtab;
   char			**ptab;
   char			**env;
@@ -53,12 +54,14 @@ typedef struct		s_big
   t_pfu			*pfunc;
 }			t_big;
 
+char **def_env();
+char cd_tiret(t_arg *);
 char cd_home(t_arg *);
 char check_only_spaces(char *);
 char set_pwd(t_arg *);
 char exec_command(t_big *, char *);
 char sub_env(t_arg *, char *);
-char add_env(t_arg *);
+char **add_env(char **, char *, char, char *);
 char add_elem(t_big *, char *, func, int);
 char fill_pfunc(t_big *);
 char mysh_setenv(t_arg *, char *);

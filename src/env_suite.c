@@ -5,29 +5,28 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Mon Jan 11 19:43:15 2016 marc brout
-** Last update Wed Jan 13 04:01:26 2016 marc brout
+** Last update Thu Jan 21 13:21:05 2016 marc brout
 */
 
 #include "mysh.h"
 
-char		add_env(t_arg *targ)
+char		**add_env(char **env, char *str, char c, char *str2)
 {
   int		nbl;
   int		i;
   char		**cpy;
 
   nbl = -1;
-  while (targ->env[++nbl] != NULL);
+  while (env[++nbl] != NULL);
   if ((cpy = malloc(sizeof(char *) * (nbl + 2))) == NULL)
-    return (1);
+    return (NULL);
   i = -1;
-  while (++i < nbl && (cpy[i] = targ->env[i]));
-  if ((cpy[i] = concat_str(targ->wtab[1], '=', targ->wtab[2])) == NULL)
-    return (1);
+  while (++i < nbl && (cpy[i] = env[i]));
+  if ((cpy[i] = concat_str(str, c, str2)) == NULL)
+    return (NULL);
   cpy[++i] = NULL;
-  free(targ->env);
-  targ->env = cpy;
-  return (0);
+  free(env);
+  return (cpy);
 }
 
 char		mysh_setenv(t_arg *targ, UNUSED char *str)
@@ -48,7 +47,9 @@ char		mysh_setenv(t_arg *targ, UNUSED char *str)
 	    return (1);
 	}
       else
-	return (add_env(targ));
+	if ((targ->env =
+	     add_env(targ->env, targ->wtab[1], '=', targ->wtab[2])) == NULL)
+	  return (1);
     }
   else
     write(1, "Usage : setenv [FLAG] [value]\n", 31);
@@ -81,11 +82,7 @@ char		mysh_unsetenv(t_arg *targ, UNUSED char *str)
 {
   int		i;
 
-  if (targ->wtab[1] != NULL && (!my_strncmp(targ->wtab[1], "PWD", 3) ||
-				!my_strncmp(targ->wtab[1], "PATH", 4) ||
-				!my_strncmp(targ->wtab[1], "HOME", 4)))
-    write(2, "This variable must not be deleted.\n", 41);
-  else if (targ->wtab[1] != NULL)
+  if (targ->wtab[1] != NULL)
     {
       i = -1;
       while (targ->env[++i] != NULL &&

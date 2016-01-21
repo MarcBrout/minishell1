@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 18:50:28 2016 marc brout
-** Last update Wed Jan 13 03:27:06 2016 marc brout
+** Last update Thu Jan 21 17:04:30 2016 marc brout
 */
 
 #include "mysh.h"
@@ -38,19 +38,23 @@ char		**env_to_wordtab(char **ev, char *str, char c)
 char		find_path(t_arg *targ)
 {
   char		*str;
+  char		*tmp;
   int		k;
 
   k = 0;
-  str = targ->wtab[0];
-  while (access(str, F_OK) && targ->ptab[k] != NULL)
+  if ((tmp = my_strdup(targ->wtab[0])) == NULL ||
+      (str = my_strdup(targ->wtab[0])) == NULL)
+    return (1);
+  while (access(str, F_OK) && targ->ptab != NULL && targ->ptab[k] != NULL)
     {
-      if ((str = concat_str(targ->ptab[k], '/', targ->wtab[0])) == NULL)
+      if ((str = concat_str(targ->ptab[k], '/', tmp)) == NULL)
 	return (1);
       free(targ->wtab[0]);
       targ->wtab[0] = str;
       k += 1;
     }
-  if (targ->ptab[k] == NULL)
+  free(tmp);
+  if (access(str, F_OK) && (targ->ptab == NULL || targ->ptab[k] == NULL))
     return (1);
   return (0);
 }

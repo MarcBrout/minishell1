@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Mon Jan 11 19:41:00 2016 marc brout
-** Last update Wed Jan 13 04:05:10 2016 marc brout
+** Last update Thu Jan 21 16:59:21 2016 marc brout
 */
 
 #include "mysh.h"
@@ -76,4 +76,18 @@ int		find_env(char **env, char *flag)
   if (env[i] == NULL)
     return (-1);
   return (i);
+}
+
+char		**def_env()
+{
+  char		**env;
+
+  if ((env = malloc(sizeof(char *) * 4)) == NULL)
+    return (NULL);
+  if ((env[0] = my_strdup("PATH=/bin:/usr/bin:/usr/local/bin")) == NULL ||
+      (env[1] = my_strdup("HOME=/home")) == NULL ||
+      (env[2] = my_strdup("PWD=/home")) == NULL)
+    return (NULL);
+  env[3] = NULL;
+  return (env);
 }

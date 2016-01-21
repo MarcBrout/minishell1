@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 14:02:14 2016 marc brout
-** Last update Thu Jan 21 09:44:33 2016 marc brout
+** Last update Thu Jan 21 16:42:19 2016 marc brout
 */
 
 #include "mysh.h"
@@ -17,7 +17,7 @@ char		set_pwd(t_arg *targ)
   int		nb;
 
   if ((i = find_env(targ->env, "PWD")) < 0)
-    return (1);
+    return (0);
   free(targ->env[i]);
   if ((str = malloc(1)) == NULL)
     return (1);
@@ -25,8 +25,7 @@ char		set_pwd(t_arg *targ)
   nb = 1;
   while (getcwd(str, nb) == NULL && nb)
     str = my_realloc(str, ++nb);
-  if ((targ->env[i] = concat_str("PWD", '=', str))
-      == NULL)
+  if ((targ->env[i] = concat_str("PWD", '=', str)) == NULL)
     return (1);
   free(str);
   return (0);
@@ -68,7 +67,7 @@ char		exec_command(t_big *big, char *str)
       while (tmp->next != NULL && my_strcmp(tmp->str, big->targ->wtab[0]))
 	tmp = tmp->next;
       if ((nb = tmp->pfu(big->targ, str)) == 1)
-	return (1);
+	  return (1);
       if (big->targ->env == NULL)
 	{
 	  free_list(big->pfunc);
@@ -108,14 +107,16 @@ int		main(UNUSED int ac, UNUSED char **av, char **ev)
   t_big		big;
   t_arg		targ;
 
-  if (ev == NULL)
-    {
-      my_printf("Missing environnement variables\n");
-      return (1);
-    }
   big.targ = &targ;
-  if ((big.targ->env = copy_env(ev)) == NULL ||
-      (fill_pfunc(&big)))
+  targ.pwd = NULL;
+  if (ev[0] == NULL)
+    {
+      if ((big.targ->env = def_env()) == NULL)
+	return (1);
+    }
+  else if ((big.targ->env = copy_env(ev)) == NULL)
+    return (1);
+  if (fill_pfunc(&big))
     return (1);
   return (mysh(&big));
 }
