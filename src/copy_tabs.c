@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Thu Jan  7 15:34:29 2016 marc brout
-** Last update Thu Jan 21 09:53:41 2016 marc brout
+** Last update Thu Jan 21 10:13:33 2016 marc brout
 */
 
 #include "mysh.h"
@@ -37,9 +37,9 @@ char		**add_word_to_tab(char **wtab, char *arg, int nbw, char c)
   while (++m < nbw)
     {
       j = 0;
-      while (arg[i] == c && arg[i] == 9 && arg[i] && (i += 1));
+      while ((arg[i] == c || arg[i] == 9) && arg[i] && (i += 1));
       k = i;
-      while (arg[i] != c && arg[i] != 9&& arg[i] && (i += 1) && (j += 1));
+      while (arg[i] != c && arg[i] != 9 && arg[i] && (i += 1) && (j += 1));
       if ((wtab[m] = malloc(j + 1)) == NULL)
 	return (NULL);
       l = 0;
