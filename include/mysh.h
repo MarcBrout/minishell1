@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 11:10:26 2016 marc brout
-** Last update Thu Jan 21 16:37:21 2016 marc brout
+** Last update Thu Jan 21 17:44:01 2016 marc brout
 */
 
 #ifndef MYSH_H_
@@ -18,6 +18,7 @@
 #  define _POSIX_SOURCE
 # endif /* !_POSIXT_SOURCE */
 
+# include <features.h>
 # include <fcntl.h>
 # include <signal.h>
 # include <sys/types.h>
