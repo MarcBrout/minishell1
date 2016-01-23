@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 14:02:14 2016 marc brout
-** Last update Thu Jan 21 18:45:47 2016 marc brout
+** Last update Sat Jan 23 23:17:28 2016 marc brout
 */
 
 #include "mysh.h"
@@ -52,7 +52,7 @@ char		launch_mysh(t_arg *targ, char *str)
 	      }
 	  wait(&status);
 	  if (WIFSIGNALED(status))
-	    write(2, "Segmentation Fault.\n", 21);
+	    write(2, "Segmentation fault\n", 20);
 	}
     }
   return (0);
