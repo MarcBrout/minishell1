@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Thu Jan  7 16:22:00 2016 marc brout
-** Last update Sun Jan 24 18:32:59 2016 marc brout
+** Last update Sun Jan 24 18:43:17 2016 marc brout
 */
 
 #include "mysh.h"
@@ -105,10 +105,11 @@ char		mysh_quit(t_arg *targ, UNUSED char *str)
   int		i;
 
   i = 0;
-  if (targ->wtab[1] && ((targ->wtab[1][0] != '-' &&
-			 targ->wtab[1][0] <= '0') || targ->wtab[1][0] >= '9'))
+  if ((targ->wtab[1] && ((targ->wtab[1][0] != '-' &&
+			  targ->wtab[1][0] <= '0') || targ->wtab[1][0] >= '9'))
+      || targ->wtab[2])
     return (my_perror(ERR_SYNT));
-  while (targ->wtab[1] && targ->wtab[1][i++])
+  while (targ->wtab[1] && targ->wtab[1][++i])
     if (targ->wtab[1][i] >= '9' || targ->wtab[1][i] <= '0')
       return (my_perror(ERR_SYNT));
   targ->ex = 1;
