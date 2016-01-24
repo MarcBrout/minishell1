@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Thu Jan  7 17:07:09 2016 marc brout
-** Last update Wed Jan 13 04:05:06 2016 marc brout
+** Last update Sun Jan 24 02:46:04 2016 marc brout
 */
 
 #include "mysh.h"
@@ -30,9 +30,12 @@ void		free_tab(char **tab)
   int		i;
 
   i = -1;
-  while (tab[++i] != NULL)
-    free(tab[i]);
-  free(tab);
+  if (tab != NULL)
+    {
+      while (tab[++i] != NULL)
+	free(tab[i]);
+      free(tab);
+    }
 }
 
 char		add_elem(t_big *big, char *str, func pfu, int nb)

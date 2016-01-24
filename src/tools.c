@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Mon Jan 11 19:41:00 2016 marc brout
-** Last update Thu Jan 21 16:59:21 2016 marc brout
+** Last update Sun Jan 24 02:01:13 2016 marc brout
 */
 
 #include "mysh.h"
@@ -15,7 +15,7 @@ char		check_only_spaces(char *str)
   int		i;
 
   i = -1;
-  while (str[++i] == ' ');
+  while (str[++i] == ' ' || str[i] == '\t');
   if (str[i] == 0)
     return (1);
   return (0);

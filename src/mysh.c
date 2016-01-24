@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 14:02:14 2016 marc brout
-** Last update Sat Jan 23 23:17:28 2016 marc brout
+** Last update Sun Jan 24 02:54:19 2016 marc brout
 */
 
 #include "mysh.h"
@@ -90,19 +90,20 @@ char		mysh(t_big *big)
 
   write(1, "$> ", 3);
   signal(SIGINT, SIG_IGN);
-  if (find_env(big->targ->env, "PATH=") < 0)
-    if ((big->targ->env = add_env
-	 (big->targ->env, "PATH", '=', "/bin:/usr/bin:/usr/local/bin"))
-	== NULL)
-      return (1);
-  if ((big->targ->ptab =
-       env_to_wordtab(big->targ->env, "PATH=", ':')) == NULL)
-    return (1);
   while ((str = get_next_line(0)))
     {
+      if (find_env(big->targ->env, "PATH=") < 0)
+	if ((big->targ->env = add_env
+	     (big->targ->env, "PATH", '=', "/bin:/usr/bin:/usr/local/bin"))
+	    == NULL)
+	  return (1);
+      if ((big->targ->ptab =
+	   env_to_wordtab(big->targ->env, "PATH=", ':')) == NULL)
+	return (1);
       if (my_strcmp(str, ""))
 	if ((ret = exec_command(big, str)) >= 1 || big->targ->env == NULL)
 	  return (ret);
+      free_tab(big->targ->ptab);
       free(str);
       write(1, "$> ", 3);
     }
@@ -113,6 +114,7 @@ int		main(UNUSED int ac, UNUSED char **av, char **ev)
 {
   t_big		big;
   t_arg		targ;
+  int		ret;
 
   big.targ = &targ;
   targ.pwd = NULL;
@@ -125,5 +127,7 @@ int		main(UNUSED int ac, UNUSED char **av, char **ev)
     return (1);
   if (fill_pfunc(&big))
     return (1);
-  return (mysh(&big));
+  ret = mysh(&big);
+  free_tab(big.targ->env);
+  return (ret);
 }

@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Thu Jan  7 15:34:29 2016 marc brout
-** Last update Thu Jan 21 10:23:36 2016 marc brout
+** Last update Sun Jan 24 02:09:51 2016 marc brout
 */
 
 #include "mysh.h"
@@ -18,8 +18,8 @@ int		count_words(char *arg, char c)
   i = -1;
   nb = 0;
   while (arg[++i])
-    if ((i > 0 && ((arg[i] != c && arg[i - 1] == c) ||
-	 (arg[i] != 9 && arg[i - 1] == 9))) ||
+    if ((i > 0 && ((arg[i] != c && arg[i] != 9) &&
+	 (arg[i - 1] == 9 || arg[i - 1] == c))) ||
 	(i == 0 && arg[i] != c && arg[i] != 9))
       nb += 1;
   return (nb);

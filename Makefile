@@ -1,11 +1,11 @@
 ##
-## Makefile for minishell1
+## Makefile for mysh
 ## 
 ## Made by marc brout
 ## Login   <brout_m@epitech.net>
 ## 
-## Started on  Tue Dec  1 22:51:35 2015 marc brout
-## Last update Thu Jan 21 11:18:23 2016 marc brout
+## Started on  Sun Jan 24 02:16:48 2016 marc brout
+## Last update Sun Jan 24 03:02:56 2016 marc brout
 ##
 
 SRCP	= ./src/
@@ -22,26 +22,26 @@ OBJS    = $(SRC:.c=.o)
 
 NAME    = mysh
 
-CC      = gcc -g
+CC      = gcc
 
-CFLAGS  = -I./include/ -W -Wall -ansi -pedantic -Werror
+CFLAGS  = 
 
-LDFLAGS = -L./lib/ -lmy
+LDFLAGS = -L./lib/ -lmy -I./include/
 
 RM      = rm -f
 
 .c.o:
-	$(CC) -c $< -o $@  $(CFLAGS)
+	$(CC) -c $< -o $@ $(LDFLAGS) $(CFLAGS)
 
 $(NAME): $(OBJS)
-	@($(CC) -o $(NAME) $(OBJS) $(LDFLAGS))
+	$(CC) -o $(NAME) $(OBJS) $(LDFLAGS)
 
-all: $(NAME)
+all: $(NAME) 
 
 clean:
-	@$(RM) $(OBJS)
+	$(RM) $(OBJS)
 
 fclean: clean
-	@$(RM) $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
