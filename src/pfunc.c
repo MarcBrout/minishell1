@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Thu Jan  7 17:07:09 2016 marc brout
-** Last update Sun Jan 24 02:46:04 2016 marc brout
+** Last update Sun Jan 24 18:17:35 2016 marc brout
 */
 
 #include "mysh.h"
@@ -71,4 +71,10 @@ char		fill_pfunc(t_big *big)
       add_elem(big, "last", &launch_mysh, 4))
     return (1);
   return (0);
+}
+
+int		my_perror(char *str)
+{
+  write(2, str, my_strlen(str));
+  return (1);
 }

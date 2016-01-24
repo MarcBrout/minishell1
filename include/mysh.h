@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 11:10:26 2016 marc brout
-** Last update Thu Jan 21 17:44:01 2016 marc brout
+** Last update Sun Jan 24 18:29:52 2016 marc brout
 */
 
 #ifndef MYSH_H_
@@ -17,6 +17,7 @@
 # ifndef _POSIX_SOURCE
 #  define _POSIX_SOURCE
 # endif /* !_POSIXT_SOURCE */
+# define ERR_SYNT "exit: Expression Syntax.\n"
 
 # include <features.h>
 # include <fcntl.h>
@@ -33,6 +34,8 @@ typedef struct		s_arg
 {
   pid_t			pid;
   pid_t			cpid;
+  int			nb;
+  int			ex;
   char			*pwd;
   char			**wtab;
   char			**ptab;
@@ -83,6 +86,8 @@ char **env_to_wordtab(char **, char *, char);
 char mysh(t_big *);
 int count_words(char *, char);
 int find_env(char **, char *);
+int my_perror(char *);
+int count_arg(char **);
 void free_tab(char **);
 void free_list(t_pfu *);
 

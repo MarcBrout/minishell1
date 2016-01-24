@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 14:02:14 2016 marc brout
-** Last update Sun Jan 24 02:54:19 2016 marc brout
+** Last update Sun Jan 24 18:14:34 2016 marc brout
 */
 
 #include "mysh.h"
@@ -51,7 +51,7 @@ char		launch_mysh(t_arg *targ, char *str)
 		exit(1);
 	      }
 	  wait(&status);
-	  if (WIFSIGNALED(status))
+	  if (WIFSIGNALED(status) || status == SIGSEGV)
 	    write(2, "Segmentation fault\n", 20);
 	}
     }
@@ -93,15 +93,17 @@ char		mysh(t_big *big)
   while ((str = get_next_line(0)))
     {
       if (find_env(big->targ->env, "PATH=") < 0)
-	if ((big->targ->env = add_env
-	     (big->targ->env, "PATH", '=', "/bin:/usr/bin:/usr/local/bin"))
-	    == NULL)
-	  return (1);
-      if ((big->targ->ptab =
-	   env_to_wordtab(big->targ->env, "PATH=", ':')) == NULL)
+	{
+	  if ((big->targ->ptab = str_to_wordtab
+	       ("/bin:/usr/bin:/usr/local/bin", ':')) == NULL)
+	    return (1);
+	}
+      else if ((big->targ->ptab =
+		env_to_wordtab(big->targ->env, "PATH=", ':')) == NULL)
 	return (1);
       if (my_strcmp(str, ""))
-	if ((ret = exec_command(big, str)) >= 1 || big->targ->env == NULL)
+	if (((ret = exec_command(big, str)) >= 1 || big->targ->env == NULL)
+	    && big->targ->ex)
 	  return (ret);
       free_tab(big->targ->ptab);
       free(str);
@@ -116,6 +118,7 @@ int		main(UNUSED int ac, UNUSED char **av, char **ev)
   t_arg		targ;
   int		ret;
 
+  targ.ex = 0;
   big.targ = &targ;
   targ.pwd = NULL;
   if (ev[0] == NULL)

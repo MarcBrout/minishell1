@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 18:50:28 2016 marc brout
-** Last update Sun Jan 24 02:52:03 2016 marc brout
+** Last update Sun Jan 24 17:42:00 2016 marc brout
 */
 
 #include "mysh.h"
@@ -47,6 +47,7 @@ char		find_path(t_arg *targ)
   char		*str;
   char		*tmp;
   int		k;
+  int		i;
 
   k = 0;
   if ((tmp = my_strdup(targ->wtab[0])) == NULL ||
@@ -56,6 +57,10 @@ char		find_path(t_arg *targ)
     {
       if ((str = concat_str(targ->ptab[k], '/', tmp)) == NULL)
 	return (1);
+      i = -1;
+      while (str[++i] && str[i + 1])
+	if ((str[i] == '/' || str[i] == '.') && str[i + 1] == '/')
+	  return (1);
       free(targ->wtab[0]);
       targ->wtab[0] = str;
       k += 1;
@@ -64,4 +69,13 @@ char		find_path(t_arg *targ)
   if (access(str, F_OK) && (targ->ptab == NULL || targ->ptab[k] == NULL))
     return (1);
   return (0);
+}
+
+int		count_arg(char **tab)
+{
+  int		i;
+
+  i = -1;
+  while (tab[++i]);
+  return (i);
 }

@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Thu Jan  7 16:22:00 2016 marc brout
-** Last update Thu Jan 21 16:14:47 2016 marc brout
+** Last update Sun Jan 24 18:32:59 2016 marc brout
 */
 
 #include "mysh.h"
@@ -13,6 +13,7 @@
 char		print_env(t_arg *targ, UNUSED char *str)
 {
   int		i;
+  int		nb;
 
   i = -1;
   while (targ->env[++i] != NULL)
@@ -101,7 +102,16 @@ char		mysh_cd(t_arg *targ, UNUSED char *path)
 char		mysh_quit(t_arg *targ, UNUSED char *str)
 {
   int		nb;
+  int		i;
 
+  i = 0;
+  if (targ->wtab[1] && ((targ->wtab[1][0] != '-' &&
+			 targ->wtab[1][0] <= '0') || targ->wtab[1][0] >= '9'))
+    return (my_perror(ERR_SYNT));
+  while (targ->wtab[1] && targ->wtab[1][i++])
+    if (targ->wtab[1][i] >= '9' || targ->wtab[1][i] <= '0')
+      return (my_perror(ERR_SYNT));
+  targ->ex = 1;
   nb = (targ->wtab[1] != NULL) ? my_getnbr(targ->wtab[1]) : 0;
   if (targ->env != NULL)
     free_tab(targ->env);

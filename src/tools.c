@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Mon Jan 11 19:41:00 2016 marc brout
-** Last update Sun Jan 24 02:01:13 2016 marc brout
+** Last update Sun Jan 24 17:39:10 2016 marc brout
 */
 
 #include "mysh.h"
@@ -26,16 +26,21 @@ char		*concat_str(char *str1, char c, char *str2)
   char		*end;
   int		i;
   int		j;
+  int		len1;
+  int		len2;
 
-  if (str1 == NULL || str2 == NULL ||
-      (end = malloc(my_strlen(str1) + my_strlen(str2) + 2)) == NULL)
+  len1 = (str1) ? my_strlen(str1) : 0;
+  len2 = (str2) ? my_strlen(str2) : 0;
+  if ((end = malloc(len1 + len2 + 2)) == NULL)
     return (NULL);
   i = -1;
   j = -1;
-  while (str1[++i] && (end[++j] = str1[i]));
+  if (str1)
+    while (str1[++i] && (end[++j] = str1[i]));
   end[++j] = c;
   i = -1;
-  while (str2[++i] && (end[++j] = str2[i]));
+  if (str2)
+    while (str2[++i] && (end[++j] = str2[i]));
   end[++j] = 0;
   return (end);
 }

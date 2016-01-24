@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Mon Jan 11 19:43:15 2016 marc brout
-** Last update Sun Jan 24 03:02:21 2016 marc brout
+** Last update Sun Jan 24 18:34:20 2016 marc brout
 */
 
 #include "mysh.h"
@@ -29,30 +29,30 @@ char		**add_env(char **env, char *str, char c, char *str2)
   return (cpy);
 }
 
-char		mysh_setenv(t_arg *targ, UNUSED char *str)
+char		mysh_setenv(t_arg *targ, char *str)
 {
   int		i;
+  int		nb;
 
-  if (targ->wtab[1] != NULL && targ->wtab[2] != NULL)
+  if ((nb = count_arg(targ->wtab)) > 1 && nb < 3)
     {
       i = -1;
-      while (targ->env[++i] != NULL &&
-	     my_strncmp(targ->env[i], targ->wtab[1],
-			my_strlen(targ->wtab[1]) - 1));
-      if (targ->env[i] != NULL)
+      while (targ->env[++i] && my_strncmp(targ->env[i], targ->wtab[1], my_strlen
+					  (targ->wtab[1]) - 1));
+      if (targ->env[i])
 	{
 	  free(targ->env[i]);
-	  if ((targ->env[i] = concat_str(targ->wtab[1], '=', targ->wtab[2]))
-	      == NULL)
+	  if (!(targ->env[i] = concat_str(targ->wtab[1], '=', targ->wtab[2])))
 	    return (1);
 	}
       else
-	if ((targ->env =
-	     add_env(targ->env, targ->wtab[1], '=', targ->wtab[2])) == NULL)
+	if (!(targ->env = add_env(targ->env, targ->wtab[1], '=', targ->wtab[2])))
 	  return (1);
     }
+  else if (nb > 2)
+    write(2, "setenv: Too many arguments.\n", 29);
   else
-    write(1, "Usage : setenv [FLAG] [value]\n", 31);
+    print_env(targ, str);
   return (0);
 }
 
@@ -72,7 +72,7 @@ char		sub_env(t_arg *targ, char *str)
   while (++i < nbl)
     if (my_strcmp(targ->env[i], str))
       cpy[++j] = targ->env[i];
-  cpy[j] = NULL;
+  cpy[++j] = NULL;
   free(targ->env);
   targ->env = cpy;
   return (0);
@@ -81,18 +81,26 @@ char		sub_env(t_arg *targ, char *str)
 char		mysh_unsetenv(t_arg *targ, UNUSED char *str)
 {
   int		i;
+  int		j;
+  int		nb;
 
-  if (targ->wtab[1] != NULL)
+  j = 0;
+  while (targ->wtab[++j] != NULL)
     {
-      i = -1;
-      while (targ->env[++i] != NULL &&
-	     my_strncmp(targ->env[i], targ->wtab[1],
-			my_strlen(targ->wtab[1]) - 1));
+      i = 0;
+      nb = my_strlen(targ->wtab[j]);
+      while (targ->env[i] != NULL)
+	{
+	  if (!my_strncmp(targ->env[i], targ->wtab[j], nb - 1) &&
+	      targ->env[i][nb] == '=')
+	    break;
+	  i += 1;
+	}
       if (targ->env[i] != NULL)
 	if (sub_env(targ, targ->env[i]))
 	  return (1);
     }
-  else
-    write(1, "Usage : unsetenv [FLAG]\n", 25);
+  if (!targ->wtab[1])
+    write(2, "unsetenv: Too few argments.\n", 29);
   return (0);
 }
