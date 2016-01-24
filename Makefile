@@ -5,7 +5,7 @@
 ## Login   <brout_m@epitech.net>
 ## 
 ## Started on  Sun Jan 24 02:16:48 2016 marc brout
-## Last update Sun Jan 24 17:27:20 2016 marc brout
+## Last update Sun Jan 24 18:54:25 2016 marc brout
 ##
 
 SRCP	= ./src/
@@ -22,7 +22,7 @@ OBJS    = $(SRC:.c=.o)
 
 NAME    = mysh
 
-CC      = gcc -g
+CC      = gcc
 
 CFLAGS  = 
 
