@@ -5,7 +5,7 @@
 ## Login   <brout_m@epitech.net>
 ## 
 ## Started on  Sun Jan 24 02:16:48 2016 marc brout
-## Last update Sun Jan 24 18:54:25 2016 marc brout
+## Last update Sun Jan 24 19:06:47 2016 marc brout
 ##
 
 SRCP	= ./src/
@@ -24,14 +24,16 @@ NAME    = mysh
 
 CC      = gcc
 
-CFLAGS  = 
+CFLAGS  =  -W -Wall -Werror -ansi -pedantic
 
-LDFLAGS = -L./lib/ -lmy -I./include/
+HDFLAGS = -I./include/
+
+LDFLAGS = -L./lib/ -lmy
 
 RM      = rm -f
 
 .c.o:
-	$(CC) -c $< -o $@ $(LDFLAGS) $(CFLAGS)
+	$(CC) -c $< -o $@ $(HDFLAGS) $(CFLAGS)
 
 $(NAME): $(OBJS)
 	$(CC) -o $(NAME) $(OBJS) $(LDFLAGS)

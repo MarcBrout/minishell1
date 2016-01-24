@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Thu Jan  7 16:22:00 2016 marc brout
-** Last update Sun Jan 24 18:43:17 2016 marc brout
+** Last update Sun Jan 24 19:05:16 2016 marc brout
 */
 
 #include "mysh.h"
@@ -13,7 +13,6 @@
 char		print_env(t_arg *targ, UNUSED char *str)
 {
   int		i;
-  int		nb;
 
   i = -1;
   while (targ->env[++i] != NULL)
