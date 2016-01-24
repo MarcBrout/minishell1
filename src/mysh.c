@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Tue Jan  5 14:02:14 2016 marc brout
-** Last update Sun Jan 24 18:14:34 2016 marc brout
+** Last update Sun Jan 24 21:31:44 2016 marc brout
 */
 
 #include "mysh.h"
@@ -51,8 +51,10 @@ char		launch_mysh(t_arg *targ, char *str)
 		exit(1);
 	      }
 	  wait(&status);
-	  if (WIFSIGNALED(status) || status == SIGSEGV)
+	  if (status == SIGSEGV)
 	    write(2, "Segmentation fault\n", 20);
+	  if (status == SIGFPE)
+	    write(2, "Floating exception\n", 20);
 	}
     }
   return (0);
@@ -92,6 +94,7 @@ char		mysh(t_big *big)
   signal(SIGINT, SIG_IGN);
   while ((str = get_next_line(0)))
     {
+      printf("%s\n", str);
       if (find_env(big->targ->env, "PATH=") < 0)
 	{
 	  if ((big->targ->ptab = str_to_wordtab
