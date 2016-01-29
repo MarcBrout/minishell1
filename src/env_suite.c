@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Mon Jan 11 19:43:15 2016 marc brout
-** Last update Sun Jan 24 18:34:20 2016 marc brout
+** Last update Fri Jan 29 01:47:08 2016 marc brout
 */
 
 #include "mysh.h"
@@ -49,7 +49,7 @@ char		mysh_setenv(t_arg *targ, char *str)
 	if (!(targ->env = add_env(targ->env, targ->wtab[1], '=', targ->wtab[2])))
 	  return (1);
     }
-  else if (nb > 2)
+  else if (nb > 3)
     write(2, "setenv: Too many arguments.\n", 29);
   else
     print_env(targ, str);
