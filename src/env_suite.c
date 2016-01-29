@@ -5,7 +5,7 @@
 ** Login   <brout_m@epitech.net>
 ** 
 ** Started on  Mon Jan 11 19:43:15 2016 marc brout
-** Last update Fri Jan 29 01:47:08 2016 marc brout
+** Last update Fri Jan 29 01:49:42 2016 marc brout
 */
 
 #include "mysh.h"
@@ -34,7 +34,7 @@ char		mysh_setenv(t_arg *targ, char *str)
   int		i;
   int		nb;
 
-  if ((nb = count_arg(targ->wtab)) > 1 && nb < 3)
+  if ((nb = count_arg(targ->wtab)) > 1 && nb < 4)
     {
       i = -1;
       while (targ->env[++i] && my_strncmp(targ->env[i], targ->wtab[1], my_strlen
