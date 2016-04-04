@@ -1,11 +1,11 @@
 /*
 ** my_put_nbr.c for my_put_nbr in ~/rendu/Piscine_C_J10
-** 
+**
 ** Made by marc brout
 ** Login   <brout_m@epitech.net>
-** 
+**
 ** Started on  Mon Oct 12 19:37:45 2015 marc brout
-** Last update Sat Oct 17 22:59:13 2015 marc brout
+** Last update Wed Mar 30 16:56:33 2016 marc brout
 */
 
 int	my_put_nbr(int nb)
